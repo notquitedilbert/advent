@@ -3,7 +3,7 @@
 var readTest = require('./readFile')
 
 
-let data = readTest('./3_data.js').then(lines => {
+let data = readTest('./data_3.js').then(lines => {
     
     console.log(lines.length)
 });
