@@ -1,7 +1,5 @@
 const readFile = require('./readFile');
 
-
-
 let data = readFile('./3_data.js').then(lines => {
     let test = []
     lines.forEach(line =>{
@@ -9,8 +7,7 @@ let data = readFile('./3_data.js').then(lines => {
     });
     
     let result = total(test)
-   console.log(result, result[0]*result[1]);
-   
+    console.log(result, result[0]*result[1]);
 });
 
 // converts the line/string to an object, keeping a count of each character
@@ -47,10 +44,9 @@ function count(data){
             if(data[letter]===3){
                 result[1]=1
             };
-
         }
     }
-    return result
+    return result;
 }
 
 // total the data
@@ -59,18 +55,10 @@ function count(data){
 function total(data){
 
     let total =[0,0]
-    // console.log(data)
-
+ 
     data.forEach(item =>{
         total[0] += item[0]
         total[1] += item[1]
     })
-
-    // let test =  data.reduce((total,item) =>{
-    //     console.log(total,item,'before')
-    //     total[0] += item[0]
-    //     total[1] += item[1]
-    //     console.log(total,item,'after')
-    // });
  return total;
 }
