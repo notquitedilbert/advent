@@ -1,7 +1,7 @@
 const readFile = require('./readFile');
 
 //* create a blank array the size of the fabric
-const fabric = createFabric(1000);
+const fabric = createFabric(999);
 
 readFile('./data_5.txt').then(lines => {
     //* loop through the data, 
@@ -14,7 +14,7 @@ readFile('./data_5.txt').then(lines => {
             // loop through each cell
             for (let cell = 0; cell < coorordinates.width; cell++) {
             
-                fabric[coorordinates.left+cell,coorordinates.top+cell] +=1;
+                fabric[coorordinates.top][parseInt(coorordinates.left,10)+parseInt(cell,10)] +=1;
     
             }
            
@@ -27,7 +27,7 @@ readFile('./data_5.txt').then(lines => {
         // keep a count of any greater than 1 
     }
 
-    console.log(fabric[50]);
+    
 });
 
 // split claim into parts - return the coordinates
@@ -52,5 +52,6 @@ function createFabric(width, height) {
     if (!height) { height = width };
 
     // return an array
-    return Array(width).fill(0).map(() => Array(height))
+
+   return Array(height).fill(0).map(() => Array(width).fill(0))
 }
