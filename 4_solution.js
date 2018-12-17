@@ -22,7 +22,6 @@ const readFile = require('./readFile');
         }
     });
 
-
 function checkLetters(line1,line2){
 
     let missmatchCount =0;

@@ -1,7 +1,5 @@
 tjxmoewpqkyaiqvmndgflunszc
 tjxmobwpqkyaihvrndgfjubszm
-aaaaaa
-aaaaab
 tjxmzewpqkyaihvrydgflrbszc
 tjxmoeypqkyvihvrndgflubsza
 tjcmoewpqkytihvrndgflgbszc
