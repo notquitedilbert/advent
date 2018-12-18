@@ -22,7 +22,7 @@ readFile('./data_5.txt').then(lines => {
     //! we need to run through each claim again, 
     // ! looking for the one that doesn't over lapp
     checkagain(lines)
-    
+
 
 });
 
@@ -30,14 +30,14 @@ readFile('./data_5.txt').then(lines => {
 // split claim into parts - return the coordinates
 // #1 @ 126,902: 29x28
 function getCoordinates(claim) {
-    
+
     // replace the spaces and remove the ID
     let data = claim.replace(/\s/g, "").split('@')[1].split(':')
 
 
     // get the data we want
     return {
-        id:claim.split('@')[0],
+        id: claim.split('@')[0],
         left: parseInt(data[0].split(',')[0]),
         top: parseInt(data[0].split(',')[1]),
         width: parseInt(data[1].split('x')[0]),
@@ -70,8 +70,22 @@ function countDuplicates(multiArray) {
 }
 
 
-function checkagain(lines){
-// loop through each line - but stop when we find one
-    
+function checkagain(lines) {
+    // loop through each line - but stop when we find one
 
+    let index = 0;
+    let found = false;
+    while (index < lines.length && !found) {
+        let coorordinates = getCoordinates(lines[index]);
+        let col, row = 0;
+        while (col < corrdinate.width && !found) {
+            while (row < corrdinate.height && !found) {
+
+                row++;
+            }
+            col++;
+        }
+
+        index++;
+    }
 }
