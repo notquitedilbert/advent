@@ -23,6 +23,7 @@ readFile('./data_5.txt').then(lines => {
     // ! looking for the one that doesn't over lapp
     checkagain(lines)
 
+    console.log('done');
 
 });
 
@@ -76,16 +77,22 @@ function checkagain(lines) {
     let index = 0;
     let found = false;
     while (index < lines.length && !found) {
-        let coorordinates = getCoordinates(lines[index]);
-        let col, row = 0;
-        while (col < corrdinate.width && !found) {
-            while (row < corrdinate.height && !found) {
-
+        found = false
+        let coorordinate = getCoordinates(lines[index]);
+        let col = row = 0;
+        while (col < coorordinate.width && !found) {
+            while (row < coorordinate.height && !found) {
+                if (fabric[coorordinate.top + row][coorordinate.left + col] > 1) { found = true }
                 row++;
             }
             col++;
         }
 
         index++;
+        if (found) {
+            console.log(coorordinate.id);
+            return coorordinate.id;
+
+        }
     }
 }
