@@ -1,7 +1,7 @@
 const readFile = require('./readFile');
 
 //* create a blank array the size of the fabric
-const fabric = createFabric(1000);
+const fabric = createFabric(999);
 
 readFile('./data_5.txt').then(lines => {
     //* loop through the data, 
@@ -9,21 +9,20 @@ readFile('./data_5.txt').then(lines => {
         let coorordinates = getCoordinates(lines[index]);
 
         // loop through each ROW of the claim
-        for (let row = 0; row < coorordinates.height; row++) {
+        for (let row = 0; row <= coorordinates.height; row++) {
 
             // loop through each cell
-            for (let cell = 0; cell < coorordinates.width; cell++) {
+            for (let col = 0; col <= coorordinates.width; col++) {
                 // increment the count
-                fabric[coorordinates.top + row][coorordinates.left + cell] += 1;
+                fabric[coorordinates.top + row][coorordinates.left + col] += 1;
             }
         }
     }
-
+   
     //! we need to run through each claim again, 
     // ! looking for the one that doesn't over lapp
-    checkagain(lines)
-
-    console.log('done');
+  
+    console.log(checkagain(lines), ' - done');
 
 });
 
@@ -75,23 +74,30 @@ function checkagain(lines) {
     // loop through each line - but stop when we find one
 
     let index = 0;
+    let fail = false;
     let found = false;
-    while (index < lines.length && !found) {
-        found = false
-        let coorordinate = getCoordinates(lines[index]);
-        let col = row = 0;
-        while (col < coorordinate.width && !found) {
-            while (row < coorordinate.height && !found) {
-                if (fabric[coorordinate.top + row][coorordinate.left + col] > 1) { found = true }
-                row++;
-            }
-            col++;
-        }
 
+    while (index < lines.length && !found) {
+        fail = false
+        let claim = getCoordinates(lines[index]);
+        let col = row = 0;
+       
+        // loop through the claim
+        while (row < claim.height && !fail) {
+            while (col < claim.width && !fail) {
+                var checking = fabric[claim.top + row][claim.left + col]
+                if (checking > 1) { 
+                    fail = true };
+                col++;
+            }
+            col=0;
+            row++;
+        }
+        
         index++;
-        if (found) {
-            console.log(coorordinate.id);
-            return coorordinate.id;
+        if (!fail) {
+            found=true;
+            return claim.id;
 
         }
     }
