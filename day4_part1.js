@@ -30,11 +30,11 @@ readFile('./day4_data.txt').then(lines => {
         id = processLine(line, id);
     });
 
-    processTimes(guards)
-    console.log(guards);
 
+    let guard = processTimes(guards);
+
+    console.log(guards[guard], guard)
 })
-
 
 //* gurad object
 // id        - integer, the id of the gurad
@@ -45,7 +45,7 @@ readFile('./day4_data.txt').then(lines => {
 
 function getTime(line) {
     // just a quick function to help sort the data
-    // remove some stuff we dont' need
+    // remove some stuff we dont' need (- : ])
     let data = line.split(']')[0].replace(/-|:|\s|\[/g, '');
 
     return data;
@@ -67,16 +67,17 @@ function processLine(line, id) {
     if (!guards[newId]) {
         guards[newId] = { times: [] };
     }
-    // todo this needs to be an object with another array in side
-    // push the data to the guard array // but not the lines with _guard_ in them
 
-    if (!regx.exec(line)) {
+    // push the data to the guard array // but not the lines with _guard_ in them
+    if (!regx.test(line)) {
         guards[newId].times.push(line);
     };
     return newId;
 }
 
 function processTimes(obj) {
+
+    let maxTime = maxId = 0
 
     // process the guards data
     Object.keys(obj).forEach(function (key) {
@@ -94,6 +95,12 @@ function processTimes(obj) {
             obj[key].totalTime += time;
         }
 
-    });
+        if (obj[key].totalTime > maxTime) {
+            maxTime = obj[key].totalTime
+            maxId = key;
+        }
 
+
+    });
+    return maxId;
 }
