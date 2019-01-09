@@ -48,6 +48,7 @@ function getTime(line) {
     // remove some stuff we dont' need (- : ])
     let data = line.split(']')[0].replace(/-|:|\s|\[/g, '');
 
+    // return data.slice(10);
     return data;
 
 }
@@ -84,12 +85,12 @@ function processTimes(obj) {
 
         // console.log(key, guards[key]);
         obj[key].totalTime = 0;
-        obj[key].sleepyTimes = []; // an array to hold a count of all the minutes asleep
+        obj[key].sleepyTimes = Array(59).fill(0); // an array to hold a count of all the minutes asleep
 
         // need to step through in pairs
         for (let index = 0; index < obj[key].times.length; index += 2) {
-            const sleep = parseInt(getTime(obj[key].times[index]))
-            const awake = parseInt(getTime(obj[key].times[index + 1]));
+            const sleep = parseInt(getTime(obj[key].times[index]).slice(10))
+            const awake = parseInt(getTime(obj[key].times[index + 1]).slice(10));
 
             // console.log(getTime(awake) - getTime(sleep));
             let time = awake - sleep;
@@ -97,7 +98,9 @@ function processTimes(obj) {
 
             // add the sleepey minutes - only need the last two digits
             for (let i = sleep; i < awake; i++) {
-                obj[key].sleepyTimes[i] ? obj[key].sleepyTimes[i] += 1 : 1
+
+                obj[key].sleepyTimes[i] += 1
+
             }
         }
 
@@ -110,3 +113,9 @@ function processTimes(obj) {
     });
     return maxId;
 }
+
+// to solve this one, i need to step through each guard
+// then step through each sleep period 
+// create an array(60) to hold each minute, and increment each one
+// when finished with the sleeps, work out which minute the guard slept the most
+// use the max function
