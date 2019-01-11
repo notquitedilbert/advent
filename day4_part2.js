@@ -34,6 +34,8 @@ readFile('./day4_data.txt').then(lines => {
     let guard = processTimes(guards);
 
     console.log(guards[guard], guard)
+
+
 })
 
 //* gurad object
@@ -78,8 +80,8 @@ function processLine(line, id) {
 
 function processTimes(obj) {
 
-    let maxTime = maxId = 0
-
+    let maxTime = maxId = maxSlept = 0
+    let maxmins = {}
     // process the guards data
     Object.keys(obj).forEach(function (key) {
 
@@ -104,6 +106,22 @@ function processTimes(obj) {
             }
         }
 
+        // find the max sleepy minute
+        let maxSleepyMinute = obj[key].sleepyTimes.indexOf(Math.max(...obj[key].sleepyTimes))
+
+        if (obj[key].sleepyTimes[maxSleepyMinute] > maxSlept) {
+            maxSlept = obj[key].sleepyTimes[maxSleepyMinute];
+            maxmins = {
+                guardId: key,
+                minute: maxSleepyMinute,
+                time: maxSlept
+            }
+        }
+
+        // store the values
+        obj[key].maxSleepyMinute = { minute: maxSleepyMinute, numberSlept: obj[key].sleepyTimes[maxSleepyMinute] };
+
+        // set the total sleep time
         if (obj[key].totalTime > maxTime) {
             maxTime = obj[key].totalTime
             maxId = key;
@@ -111,11 +129,11 @@ function processTimes(obj) {
 
 
     });
-    return maxId;
+    return maxmins;
 }
 
 // to solve this one, i need to step through each guard
 // then step through each sleep period 
 // create an array(60) to hold each minute, and increment each one
 // when finished with the sleeps, work out which minute the guard slept the most
-// use the max function
+// 
